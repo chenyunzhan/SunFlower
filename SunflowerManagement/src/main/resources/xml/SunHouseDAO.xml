@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sunflower.mapper.SunHouseDAO">
+  <resultMap id="BaseResultMap" type="com.sunflower.model.SunHouse">
+    <id column="house_id" jdbcType="INTEGER" property="houseId" />
+    <result column="house_no" jdbcType="VARCHAR" property="houseNo" />
+    <result column="house_name" jdbcType="VARCHAR" property="houseName" />
+    <result column="house_picture" jdbcType="VARCHAR" property="housePicture" />
+    <result column="house_is_rent" jdbcType="VARCHAR" property="houseIsRent" />
+    <result column="house_month_price" jdbcType="VARCHAR" property="houseMonthPrice" />
+    <result column="house_year_price" jdbcType="VARCHAR" property="houseYearPrice" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="create_account" jdbcType="VARCHAR" property="createAccount" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+    <result column="update_account" jdbcType="VARCHAR" property="updateAccount" />
+    <result column="extend_one" jdbcType="VARCHAR" property="extendOne" />
+    <result column="extend_two" jdbcType="VARCHAR" property="extendTwo" />
+    <result column="extend_three" jdbcType="VARCHAR" property="extendThree" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    house_id, house_no, house_name, house_picture, house_is_rent, house_month_price, 
+    house_year_price, create_time, create_account, update_time, update_account, extend_one, 
+    extend_two, extend_three
+  </sql>
+  <select id="selectByExample" parameterType="com.sunflower.model.SunHouseExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sun_house
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sun_house
+    where house_id = #{houseId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sun_house
+    where house_id = #{houseId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.sunflower.model.SunHouseExample">
+    delete from sun_house
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.sunflower.model.SunHouse">
+    insert into sun_house (house_id, house_no, house_name, 
+      house_picture, house_is_rent, house_month_price, 
+      house_year_price, create_time, create_account, 
+      update_time, update_account, extend_one, 
+      extend_two, extend_three)
+    values (#{houseId,jdbcType=INTEGER}, #{houseNo,jdbcType=VARCHAR}, #{houseName,jdbcType=VARCHAR}, 
+      #{housePicture,jdbcType=VARCHAR}, #{houseIsRent,jdbcType=VARCHAR}, #{houseMonthPrice,jdbcType=VARCHAR}, 
+      #{houseYearPrice,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{createAccount,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=VARCHAR}, #{updateAccount,jdbcType=VARCHAR}, #{extendOne,jdbcType=VARCHAR}, 
+      #{extendTwo,jdbcType=VARCHAR}, #{extendThree,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.sunflower.model.SunHouse">
+    insert into sun_house
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="houseId != null">
+        house_id,
+      </if>
+      <if test="houseNo != null">
+        house_no,
+      </if>
+      <if test="houseName != null">
+        house_name,
+      </if>
+      <if test="housePicture != null">
+        house_picture,
+      </if>
+      <if test="houseIsRent != null">
+        house_is_rent,
+      </if>
+      <if test="houseMonthPrice != null">
+        house_month_price,
+      </if>
+      <if test="houseYearPrice != null">
+        house_year_price,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="createAccount != null">
+        create_account,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="updateAccount != null">
+        update_account,
+      </if>
+      <if test="extendOne != null">
+        extend_one,
+      </if>
+      <if test="extendTwo != null">
+        extend_two,
+      </if>
+      <if test="extendThree != null">
+        extend_three,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="houseId != null">
+        #{houseId,jdbcType=INTEGER},
+      </if>
+      <if test="houseNo != null">
+        #{houseNo,jdbcType=VARCHAR},
+      </if>
+      <if test="houseName != null">
+        #{houseName,jdbcType=VARCHAR},
+      </if>
+      <if test="housePicture != null">
+        #{housePicture,jdbcType=VARCHAR},
+      </if>
+      <if test="houseIsRent != null">
+        #{houseIsRent,jdbcType=VARCHAR},
+      </if>
+      <if test="houseMonthPrice != null">
+        #{houseMonthPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="houseYearPrice != null">
+        #{houseYearPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createAccount != null">
+        #{createAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateAccount != null">
+        #{updateAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="extendOne != null">
+        #{extendOne,jdbcType=VARCHAR},
+      </if>
+      <if test="extendTwo != null">
+        #{extendTwo,jdbcType=VARCHAR},
+      </if>
+      <if test="extendThree != null">
+        #{extendThree,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.sunflower.model.SunHouseExample" resultType="java.lang.Long">
+    select count(*) from sun_house
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update sun_house
+    <set>
+      <if test="record.houseId != null">
+        house_id = #{record.houseId,jdbcType=INTEGER},
+      </if>
+      <if test="record.houseNo != null">
+        house_no = #{record.houseNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.houseName != null">
+        house_name = #{record.houseName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.housePicture != null">
+        house_picture = #{record.housePicture,jdbcType=VARCHAR},
+      </if>
+      <if test="record.houseIsRent != null">
+        house_is_rent = #{record.houseIsRent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.houseMonthPrice != null">
+        house_month_price = #{record.houseMonthPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="record.houseYearPrice != null">
+        house_year_price = #{record.houseYearPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createAccount != null">
+        create_account = #{record.createAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateAccount != null">
+        update_account = #{record.updateAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.extendOne != null">
+        extend_one = #{record.extendOne,jdbcType=VARCHAR},
+      </if>
+      <if test="record.extendTwo != null">
+        extend_two = #{record.extendTwo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.extendThree != null">
+        extend_three = #{record.extendThree,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update sun_house
+    set house_id = #{record.houseId,jdbcType=INTEGER},
+      house_no = #{record.houseNo,jdbcType=VARCHAR},
+      house_name = #{record.houseName,jdbcType=VARCHAR},
+      house_picture = #{record.housePicture,jdbcType=VARCHAR},
+      house_is_rent = #{record.houseIsRent,jdbcType=VARCHAR},
+      house_month_price = #{record.houseMonthPrice,jdbcType=VARCHAR},
+      house_year_price = #{record.houseYearPrice,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=VARCHAR},
+      create_account = #{record.createAccount,jdbcType=VARCHAR},
+      update_time = #{record.updateTime,jdbcType=VARCHAR},
+      update_account = #{record.updateAccount,jdbcType=VARCHAR},
+      extend_one = #{record.extendOne,jdbcType=VARCHAR},
+      extend_two = #{record.extendTwo,jdbcType=VARCHAR},
+      extend_three = #{record.extendThree,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sunflower.model.SunHouse">
+    update sun_house
+    <set>
+      <if test="houseNo != null">
+        house_no = #{houseNo,jdbcType=VARCHAR},
+      </if>
+      <if test="houseName != null">
+        house_name = #{houseName,jdbcType=VARCHAR},
+      </if>
+      <if test="housePicture != null">
+        house_picture = #{housePicture,jdbcType=VARCHAR},
+      </if>
+      <if test="houseIsRent != null">
+        house_is_rent = #{houseIsRent,jdbcType=VARCHAR},
+      </if>
+      <if test="houseMonthPrice != null">
+        house_month_price = #{houseMonthPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="houseYearPrice != null">
+        house_year_price = #{houseYearPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createAccount != null">
+        create_account = #{createAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateAccount != null">
+        update_account = #{updateAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="extendOne != null">
+        extend_one = #{extendOne,jdbcType=VARCHAR},
+      </if>
+      <if test="extendTwo != null">
+        extend_two = #{extendTwo,jdbcType=VARCHAR},
+      </if>
+      <if test="extendThree != null">
+        extend_three = #{extendThree,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where house_id = #{houseId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sunflower.model.SunHouse">
+    update sun_house
+    set house_no = #{houseNo,jdbcType=VARCHAR},
+      house_name = #{houseName,jdbcType=VARCHAR},
+      house_picture = #{housePicture,jdbcType=VARCHAR},
+      house_is_rent = #{houseIsRent,jdbcType=VARCHAR},
+      house_month_price = #{houseMonthPrice,jdbcType=VARCHAR},
+      house_year_price = #{houseYearPrice,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=VARCHAR},
+      create_account = #{createAccount,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=VARCHAR},
+      update_account = #{updateAccount,jdbcType=VARCHAR},
+      extend_one = #{extendOne,jdbcType=VARCHAR},
+      extend_two = #{extendTwo,jdbcType=VARCHAR},
+      extend_three = #{extendThree,jdbcType=VARCHAR}
+    where house_id = #{houseId,jdbcType=INTEGER}
+  </update>
+</mapper>
