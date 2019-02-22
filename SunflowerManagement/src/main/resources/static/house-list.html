@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Vue 测试实例 - 菜鸟教程(runoob.com)</title>
+
+<script src="https://cdn.staticfile.org/vue/2.4.2/vue.min.js"></script>
+<script src="https://cdn.staticfile.org/vue-resource/1.5.1/vue-resource.min.js"></script>
+
+<style>
+    /*-------------------------
+    	列表布局
+    --------------------------*/
+
+	[v-cloak]{
+	    display: none;
+	}
+
+
+    ul.list{
+    	list-style: none;
+    	width: 500px;
+    	margin: 0 auto;
+    	text-align: left;
+    }
+
+    ul.list li{
+    	border-bottom: 1px solid #ddd;
+    	padding: 10px;
+    	overflow: hidden;
+    }
+
+    ul.list li img{
+    	width:120px;
+    	height:120px;
+    	float:left;
+    	border:none;
+    }
+
+    ul.list li p{
+    	margin-left: 135px;
+    	font-weight: bold;
+    	color:#6e7a7f;
+    }
+</style>
+</head>
+<body>
+
+	<div id="box">
+		<ul  class="list" v-cloak>
+			<!-- 使用小图及标题 -->
+			<li v-for="a in articles">
+				<a v-bind:href="a.housePicture" target="_blank"><img v-bind:src="a.housePicture" /></a>
+				<p>{{a.houseName}}</p>
+				<p>{{a.houseIsRent}}</p>
+			</li>
+		</ul>
+	</div>
+		
+	
+
+
+	
+
+<script  type = "text/javascript">
+
+	window.onload = function(){
+	    var vm = new Vue({
+	        el:'#box',
+	        data:{
+	            msg:'Hello World!',
+	            articles: [
+	            	{
+			          "houseName": "HTML 教程",
+			          "housePicture": "https://www.runoob.com/html/html-tutorial.html",
+			          "houseIsRent": "houseIsRent"
+			        }]
+	        },
+	        created:function(){
+				this.post();
+	        },
+	        methods:{
+		        post:function(){
+		            //发送 post 请求
+		            this.$http.post('/houseList',{houseNo:null,houseName:null},{emulateJSON:false}).then(
+		              function(res){
+						this.articles = res.data.data; //直接赋值
+	                  }, function(res){
+						console.log(res);
+	                  }
+	                );
+		        }
+		    }
+	    });
+	}
+
+</script>
+
+</body>
+</html>
